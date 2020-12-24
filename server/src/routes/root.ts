@@ -1,8 +1,8 @@
 const route = require("express").Router();
 const wsMethods = require("../wsMethods");
-const connections = new wsMethods();
+const connections: wsCollection = new wsMethods();
 
-route.ws('', (ws, req) => {
+route.ws('', (ws) => {
   connections.addClient(ws);
 
   connections.broadcastMessage(JSON.stringify({
@@ -11,11 +11,12 @@ route.ws('', (ws, req) => {
   }));
 
   ws.on("message", (msg) => {
-    console.log(msg);
+
   });
 
   ws.on("close", () => {
     connections.deleteClient(ws);
+
     connections.broadcastMessage(JSON.stringify({
       target: "online",
       value: connections.quantity
