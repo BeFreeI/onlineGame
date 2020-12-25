@@ -1,23 +1,24 @@
-import express from "express";
-import { wsCollection } from "../wsCollection";
+const route = require('express').Router();
+const { WsCollection } = require('../wsCollection');
 
-export const route = express.Router();
-const connections: wsCollection = new wsCollection();
+const connections: typeof WsCollection = new WsCollection();
 
- route.ws('', (ws) => {
+route.ws('', (ws) => {
   connections.addClient(ws);
 
   connections.broadcastMessage(JSON.stringify({
-    target: "online",
-    value: connections.quantity
+    target: 'online',
+    value: connections.quantity,
   }));
 
-  ws.on("close", () => {
+  ws.on('close', () => {
     connections.deleteClient(ws);
 
     connections.broadcastMessage(JSON.stringify({
-      target: "online",
-      value: connections.quantity
+      target: 'online',
+      value: connections.quantity,
     }));
-  })
+  });
 });
+
+module.exports = route;

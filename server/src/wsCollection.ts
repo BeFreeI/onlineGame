@@ -1,17 +1,17 @@
-import { Session } from "./Session";
-import WebSocket from 'ws';
-import { nanoid } from "nanoid";
+const { nanoid } = require('nanoid');
+const { Session } = require('./Session');
 
-export class wsCollection {
+module.exports.WsCollection = class WsCollection {
   private clients = new Set<WebSocket>();
-  private sessions = new Map<string, Session>();
 
-  addClient(client: WebSocket): wsCollection {
+  private sessions = new Map<string, typeof Session>();
+
+  addClient(client: WebSocket): WsCollection {
     this.clients.add(client);
     return this;
   }
 
-  deleteClient(client: WebSocket): wsCollection {
+  deleteClient(client: WebSocket): WsCollection {
     this.clients.delete(client);
     return this;
   }
@@ -26,7 +26,7 @@ export class wsCollection {
     return this.clients.size;
   }
 
-  broadcastMessage(msg:  string): void {
+  broadcastMessage(msg: string): void {
     this.clients.forEach((client) => client.send(msg));
   }
-}
+};

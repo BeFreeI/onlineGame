@@ -1,7 +1,7 @@
-import Express from "express";
-import enableWs from "express-ws";
-export const app = Express();
-enableWs(app);
-import { route } from "./routes/root"
+const app = require('express')();
+require('express-ws')(app);
+const wsRoute = require('./routes/root');
 
-app.use("/", route);
+app.use('/', wsRoute);
+
+module.exports = app;

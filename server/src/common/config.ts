@@ -1,8 +1,10 @@
-import dotenv from 'dotenv';
-import path  from "path";
+const dotenv = require('dotenv');
+const path = require('path');
 
 dotenv.config({
-  path: path.join(__dirname, '../../.env')
+  path: path.join(__dirname, '../../.env'),
 });
 
-export const PORT = process.env.PORT;
+module.exports = {
+  PORT: process.env.PORT,
+};

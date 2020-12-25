@@ -1,5 +1,2 @@
-import { PORT } from "./common/config";
-import { app } from './app';
-
-
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+const { PORT } = require('./common/config');
+require('./app').listen(PORT, () => console.log(`Server started on port ${PORT}`));

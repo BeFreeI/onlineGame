@@ -1,8 +1,8 @@
-import WebSocket from 'ws';
-
-export class Session {
+module.exports.Session = class Session {
   firstPlayer: WebSocket
+
   secondPlayer: WebSocket
+
   gameArena: Array<Array<number>>
 
   constructor(creator: WebSocket, arenaSize = 3) {
@@ -18,5 +18,4 @@ export class Session {
   connectSecondPlayer(player: WebSocket): void {
     this.secondPlayer = player;
   }
-
-}
+};
