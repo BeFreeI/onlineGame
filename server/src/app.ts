@@ -1,7 +1,7 @@
-const app = require("express")();
-const expressWs = require("express-ws")(app);
-const root = require("./routes/root");
+import Express from "express";
+import enableWs from "express-ws";
+export const app = Express();
+enableWs(app);
+import { route } from "./routes/root"
 
-app.use("/", root);
-
-module.exports = app;
+app.use("/", route);

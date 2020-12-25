@@ -1,18 +1,16 @@
-const route = require("express").Router();
-const wsMethods = require("../wsMethods");
-const connections: wsCollection = new wsMethods();
+import express from "express";
+import { wsCollection } from "../wsCollection";
 
-route.ws('', (ws) => {
+export const route = express.Router();
+const connections: wsCollection = new wsCollection();
+
+ route.ws('', (ws) => {
   connections.addClient(ws);
 
   connections.broadcastMessage(JSON.stringify({
     target: "online",
     value: connections.quantity
   }));
-
-  ws.on("message", (msg) => {
-
-  });
 
   ws.on("close", () => {
     connections.deleteClient(ws);
@@ -23,5 +21,3 @@ route.ws('', (ws) => {
     }));
   })
 });
-
-module.exports = route;
