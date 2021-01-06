@@ -1,8 +1,10 @@
-import { createStore } from 'redux';
-import { UPDATE_QUANTITY_USERS } from './actionTypes/constant'
+import { createStore, applyMiddleware } from 'redux';
+import { UPDATE_QUANTITY_USERS, IN_MESSAGE } from './actionTypes/constant';
+import * as wsMethods from './actionsCreators/wsMessages';
 import initState from './initialState';
+import { wsMiddleware } from './wsMiddlewares';
 
-const socket = new WebSocket('ws://localhost:4000');
+export const socket = new WebSocket('ws://192.168.1.107:4000');
 
 const reducer = (state = initState, { type, payload }) => {
   const newState = { ...state };
@@ -10,17 +12,17 @@ const reducer = (state = initState, { type, payload }) => {
     case UPDATE_QUANTITY_USERS:
       newState.quantity = payload;
       break;
+    case IN_MESSAGE:
+      newState.messagesHistory = [...newState.messagesHistory, payload];
+      break;
     default:
       break;
   }
   return newState;
 };
 
-const store = createStore(reducer);
-
+export const store = createStore(reducer, applyMiddleware(wsMiddleware));
 
 socket.onmessage = ({data}) => {
-  store.dispatch({ type: UPDATE_QUANTITY_USERS, payload: JSON.parse(data).value})
+  store.dispatch(wsMethods.updateQuantity(JSON.parse(data)));
 };
-
-export default store;

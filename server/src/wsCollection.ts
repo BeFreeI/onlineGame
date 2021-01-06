@@ -26,7 +26,8 @@ module.exports.WsCollection = class WsCollection {
     return this.clients.size;
   }
 
-  broadcastMessage(msg: string): void {
-    this.clients.forEach((client) => client.send(msg));
+  broadcastMessage(msg: string, exclude: Array<WebSocket> = []): void {
+    Array.from(this.clients).filter((client) => !exclude.includes(client))
+      .forEach((client) => client.send(msg));
   }
 };

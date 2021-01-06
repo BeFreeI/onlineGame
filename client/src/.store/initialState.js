@@ -1,3 +1,4 @@
 export default {
-  quantity: 0
+  quantity: 1,
+  messagesHistory: [],
 }

@@ -19,6 +19,20 @@ route.ws('', (ws) => {
       value: connections.quantity,
     }));
   });
+
+  ws.on('message', (data) => {
+    const { target, value } = JSON.parse(data);
+    switch (target) {
+      case 'send':
+        connections.broadcastMessage(JSON.stringify({
+          target: 'message',
+          value,
+        }), [ws]);
+        break;
+      default:
+        break;
+    }
+  });
 });
 
 module.exports = route;
