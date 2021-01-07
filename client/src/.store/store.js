@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware } from 'redux';
 import * as wsMethods from './actionsCreators/wsMessages';
-import initState from './initialState';
 import rootReduser from './reducers/rootReducer';
 import { wsMiddleware } from './wsMiddlewares';
 
