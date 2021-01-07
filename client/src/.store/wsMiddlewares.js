@@ -7,7 +7,7 @@ export const wsMiddleware = storeAPI => next => action => {
     socket.send(JSON.stringify({
       target: 'send',
       value: action.payload,
-    }))
+    }));
   }
 
   return next(action);
